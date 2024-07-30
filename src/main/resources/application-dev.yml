@@ -1,0 +1,21 @@
+spring:
+    datasource:
+        url: jdbc:postgresql://localhost:5432/user_auth_db
+        username: username
+        password: password
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+        properties:
+            format_sql: true
+        database: postgresql
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+server:
+    port: 8088
+application:
+    security:
+        jwt:
+            secret-key: '178a9781804318b1a74fffe158852b74a204bc2ec2b75a4d3cfcd85beeed491a'
+            expiration: 86400000
