@@ -4,7 +4,7 @@ import com.praveenukkoji.user_service.config.JwtService;
 import com.praveenukkoji.user_service.dto.AuthenticateRequest;
 import com.praveenukkoji.user_service.dto.AuthenticateResponse;
 import com.praveenukkoji.user_service.dto.RegisterRequest;
-import com.praveenukkoji.user_service.exception.RoleNotFound;
+import com.praveenukkoji.user_service.exception.RoleNotFoundException;
 import com.praveenukkoji.user_service.model.Role;
 import com.praveenukkoji.user_service.model.User;
 import com.praveenukkoji.user_service.repository.RoleRepository;
@@ -28,9 +28,9 @@ public class AuthService {
     private final JwtService jwtService;
 
 
-    public void register(RegisterRequest registerRequest) throws RoleNotFound {
+    public void register(RegisterRequest registerRequest) throws RoleNotFoundException {
         Role role = roleRepository.findByName("USER")
-                .orElseThrow(() -> new RoleNotFound("role not found"));
+                .orElseThrow(() -> new RoleNotFoundException("role not found"));
 
         User user = User.builder()
                 .fullname(registerRequest.getFullname())

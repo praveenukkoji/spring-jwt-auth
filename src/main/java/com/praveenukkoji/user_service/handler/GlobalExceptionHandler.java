@@ -1,5 +1,6 @@
 package com.praveenukkoji.user_service.handler;
 
+import com.praveenukkoji.user_service.exception.RoleNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -10,6 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.praveenukkoji.user_service.handler.BusinessErrorCodes.BAD_CREDENTIALS;
+import static com.praveenukkoji.user_service.handler.BusinessErrorCodes.ENTITY_NOT_FOUND;
 import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
@@ -24,6 +26,19 @@ public class GlobalExceptionHandler {
                                 .businessErrorCode(BAD_CREDENTIALS.getCode())
                                 .businessErrorDescription(BAD_CREDENTIALS.getDescription())
                                 .error("Login and / or Password is incorrect")
+                                .build()
+                );
+    }
+
+    @ExceptionHandler(RoleNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleRoleNotFoundException() {
+        return ResponseEntity
+                .status(NOT_FOUND)
+                .body(
+                        ExceptionResponse.builder()
+                                .businessErrorCode(ENTITY_NOT_FOUND.getCode())
+                                .businessErrorDescription(ENTITY_NOT_FOUND.getDescription())
+                                .error("role not found")
                                 .build()
                 );
     }
